@@ -4,48 +4,55 @@
 }
 
 body {
+    display: flex;
     align-items: center;
-    display: block;
+    justify-content: center;
+    height: 100vh;
+}
+
+.wrapper {
+    max-width: 1110;
+    width: 50%;
     text-align: center;
 }
 
-.canvas,
-.controls {
-    align-items: center;
-    display: block;
-    text-align: center;
+#color-palette {
+    background-color: white;
+    margin: 150px auto;
+    padding: 10px;
 }
-
 .canvas {
-    border: 1px solid black;
+    border: 1px dotted black;
     flex-direction: column;
-    padding: 50px;
+    padding: 1px;
+}
+.canvas, .controls {
+    align-items: center;
 }
 
-.color-palette {
-    list-style-type: red green blue;
-    padding: 0;
+button {
+    margin-bottom: 15px;
 }
 
 .color {
     border: 1px solid black;
     display: inline-block;
-    height: 25px;
-    width: 25px;
-}
-
-.color:first-child {
-    background-color: black;
+    height: 40px;
+    width: 40px;
 }
 
 .pixel-board {
-    display: table;
-    margin: 10px auto;
+    border-collapse: collapse;
+    border-spacing: 0px;
+    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .pixel {
     border: 1px solid black;
-    display: table-cell;
+    background-color: white;
+    display: inline-flex;
     height: 25px;
     width: 25px;
 }
@@ -53,19 +60,20 @@ body {
 .actionButton {
     background-color: white;
     border: 1px solid black;
-    display: block;
-    padding: 10px;
-    text-align: center;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 10px;
-    margin-right: 5px;
-    margin-left: 513px;
+    margin: 0 5px 15px 0;
+    padding: 8px;
+}
 
-
+table {
+    vertical-align: middle;
+    border: 1px solid black;
+    background-color: white;
+    display: inline-flex;
+    height: 25px;
+    width: 25px;
 }
 
 .board-size {
-    height: 27px;
-    width: 150px;
+    height: 20px;
+    width: 100px;
 }

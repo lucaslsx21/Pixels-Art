@@ -82,8 +82,8 @@ buttonRandomColor.addEventListener('click', createColor);
 function checkBoardSize(boardSize) {
     if (boardSize < 5) {
         boardSize = 5;
-    } else if (boardSize > 75) {
-        boardSize = 75;
+    } else if (boardSize > 256) {
+        boardSize = 256;
     }
     pixelBoard.innerHTML = '';
     drawPixelBoard(boardSize);
