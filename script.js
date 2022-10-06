@@ -1,107 +1,140 @@
-const pixelBoard = document.querySelector('#pixel-board');
-let selectedColor = 'rgb(0 , 0 , 0)';
-const colorBox = document.getElementsByClassName('color');
-const clearButton = document.querySelector('#clear-board');
-const buttonRandomColor = document.querySelector('#button-random-color');
+// Create color palette
+const createColorSinglePalette = (color) => {
+    const colorPaletteDiv = document.querySelector('#color-palette');
+    const colorDiv = document.createElement('div');
+    colorDiv.className = 'color';
+    colorDiv.dataset.event = 'selectColor';
+    colorDiv.style.backgroundColor = color;
+    colorPaletteDiv.appendChild(colorDiv);
+    return colorDiv;
 
-// Função para criar a paleta de cores selecionáveis
-function createColor() {
-    for (let index = 0; index < colorBox.length; index += 1) {
-        const randomColor = [];
-        const rgbColors = 3;
-        for (let rgbIndex = 0; rgbIndex < rgbColors; rgbIndex += 1) {
-            randomColor.push(Math.floor(Math.random() * 254));
+}
+const colorGeneratorRandom = () => {
+    return `rgb(${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)}, ${Math.floor(Math.random() * 256)})`;
+}
+
+
+const populateColorsPalette = (number) => {
+    const firstColor = createColorSinglePalette('black');
+    firstColor.classList.add('selected')
+    for (let index = 1; index <= number; index += 1) {
+        createColorSinglePalette(colorGeneratorRandom());
+    }
+}
+//localStore
+function addStorage() {
+    const itens = document.getElementsByClassName('color');
+    let array = [];
+    for (const item of itens) {
+        array.push(itens.innerText);
+    }
+    localStorage.setItem('iten', JSON.stringify(array));
+}
+
+
+// Create board canvas
+const createLinePixel = () => {
+    const linePixelBoard = document.createElement('div');
+    linePixelBoard.className = "line-pixel-board";
+    return linePixelBoard;
+}
+const createPixelInLine = () => {
+    const pixelDiv = document.createElement('div');
+    pixelDiv.className = 'pixel';
+    pixelDiv.dataset.event = 'changeColor';
+    pixelDiv.style.backgroundColor = 'white';
+    return pixelDiv;
+}
+const createCanvasBoard = (number) => {
+    const pixelBoard = document.querySelector('#pixel-board');
+    for (let line = 1; line <= number; line += 1) {
+        const line = createLinePixel();
+        for (let pixel = 1; pixel <= number; pixel += 1) {
+            line.appendChild(createPixelInLine());
         }
-        colorBox[index].style.backgroundColor = `rgb(${randomColor})`;
-    }
-    colorBox[0].style.backgroundColor = 'rgb(0 , 0 , 0)';
-    colorBox[0].classList.add('selected');
-}
-
-function drawColumns(lineId, columns) {
-    const line = document.querySelector(`#line${lineId}`);
-    for (let lineColumn = 1; lineColumn <= columns; lineColumn += 1) {
-        const newPixel = document.createElement('td');
-        newPixel.setAttribute('class', 'pixel');
-        newPixel.style.backgroundColor = 'white';
-        line.appendChild(newPixel);
+        pixelBoard.appendChild(line);
     }
 }
 
-// Função para desenhar o quadro de pixel conforme a quantidade de linhas desejadas
-function drawPixelBoard(lines) {
-    for (let line = 1; line <= lines; line += 1) {
-        const lineId = `line${line}`;
-        const newLine = document.createElement('tr');
-        newLine.setAttribute('id', lineId);
-        pixelBoard.appendChild(newLine);
-        drawColumns(line, lines);
-    }
+// Select color
+let colorComputed = 'black';
+const selectColor = (event) => {
+    const currentColorSelected = document.querySelector('.selected');
+    currentColorSelected.classList.remove('selected')
+    event.target.classList.add('selected');
+    getColorSelect(event);
 }
-drawPixelBoard();
-
-for (let index = 0; index < colorBox.length; index += 1) {
-    colorBox[index].onclick = function () {
-        colorBox[index].classList.add('selected');
-        selectedColor = colorBox[index].style.backgroundColor;
-        for (let box = 0; box < colorBox.length; box += 1) {
-            if (colorBox[index] !== colorBox[box] && colorBox[box].classList.contains('selected')) {
-                colorBox[box].classList.remove('selected');
-            }
-        }
-    };
+const getColorSelect = (event) => {
+    const color = window.getComputedStyle(event.target).getPropertyValue('background-color');
+    colorComputed = color;
+}
+const setColorChangePixel = (event) => {
+    const pixel = event.target;
+    pixel.style.backgroundColor = colorComputed;
 }
 
-// função para pintar o pixel clicado com a cor selecionada
-function paintPixel() {
-    for (let index = 0; index < pixelBoard.childElementCount; index += 1) {
-        const boardLine = pixelBoard.children[index];
-        for (let pixel = 0; pixel < boardLine.children.length; pixel += 1) {
-            const paintClickedPixel = pixelBoard.children[index].children[pixel];
-            paintClickedPixel.onclick = function () {
-                paintClickedPixel.style.backgroundColor = selectedColor;
-                paintClickedPixel.style.borderColor = selectedColor;
-            };
-        }
+// Clear button
+const clearButtonPixelBoard = () => {
+    const pixels = document.querySelectorAll('.pixel');
+    for (const pixel of pixels) {
+        pixel.style.backgroundColor = 'white';
     }
 }
 
-function clearCanvas() {
-    for (let index = 0; index < pixelBoard.childElementCount; index += 1) {
-        const boardLine = pixelBoard.children[index];
-        for (let pixel = 0; pixel < boardLine.children.length; pixel += 1) {
-            const paintWhitePixel = pixelBoard.children[index].children[pixel];
-            paintWhitePixel.style.backgroundColor = 'white';
-        }
-    }
-}
-
-clearButton.addEventListener('click', clearCanvas);
-buttonRandomColor.addEventListener('click', createColor);
-
-function checkBoardSize(boardSize) {
-    if (boardSize < 5) {
-        boardSize = 5;
-    } else if (boardSize > 256) {
-        boardSize = 256;
-    }
-    pixelBoard.innerHTML = '';
-    drawPixelBoard(boardSize);
-    paintPixel();
-}
-
-const generateBoard = document.querySelector('#generate-board');
-generateBoard.addEventListener('click', function () {
-    const boardSize = document.querySelector('#board-size').value;
-    if (boardSize === '') {
-        alert('Board inválido!');
+// Resize pixel border
+const resizeCanvasBoard = () => {
+    let inputResizeValue = Number(document.querySelector('#board-size').value);
+    if (inputResizeValue >= 5 && inputResizeValue <= 50) {
+        removeCurrentBoardCanvas();
+        createCanvasBoard(inputResizeValue);
+    } else if (inputResizeValue > 50) {
+        inputResizeValue = 50;
+        removeCurrentBoardCanvas();
+        createCanvasBoard(inputResizeValue);
     } else {
-        checkBoardSize(boardSize);
+        alert("Board inválido!")
     }
-});
+}
+const removeCurrentBoardCanvas = () => {
+    const pixels = document.querySelectorAll('.pixel');
+    for (const pixel of pixels) {
+        pixel.remove();
+    }
+}
 
-window.onload = function () {
-    createColor();
-    drawPixelBoard(5);
-    paintPixel();
-};
+// Event handle's
+const handleControllerEvents = (...types) => {
+    for (const type of types) {
+        switch (type) {
+            case 'click':
+                controllerEventsClicks(type);
+                break;
+        }
+    }
+}
+const controllerEventsClicks = (type) => {
+    document.addEventListener(type, (event) => {
+        const dataSetEvent = event.target.dataset.event;
+        switch (dataSetEvent) {
+            case 'selectColor':
+                selectColor(event);
+                break;
+            case 'changeColor':
+                setColorChangePixel(event);
+                break;
+            case 'clearButton':
+                clearButtonPixelBoard();
+                break;
+            case 'resizeCanvas':
+                resizeCanvasBoard();
+                break;
+        }
+    })
+}
+
+// Load page
+window.onload = () => {
+    populateColorsPalette(3);
+    createCanvasBoard(5)
+    handleControllerEvents('click')
+}

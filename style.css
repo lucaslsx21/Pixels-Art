@@ -8,72 +8,46 @@ body {
     align-items: center;
     justify-content: center;
     height: 100vh;
+
 }
 
 .wrapper {
-    max-width: 1110;
-    width: 50%;
+    max-width: 1180px;
+    width: 100%;
     text-align: center;
 }
 
 #color-palette {
     background-color: white;
-    margin: 150px auto;
-    padding: 10px;
-}
-.canvas {
-    border: 1px dotted black;
-    flex-direction: column;
-    padding: 1px;
-}
-.canvas, .controls {
-    align-items: center;
+    margin: 0 auto;
+    padding: 16px;
 }
 
-button {
-    margin-bottom: 15px;
+.button {
+    margin-bottom: 10px;
 }
 
 .color {
+    width: 40px;
+    height: 40px;
     border: 1px solid black;
     display: inline-block;
-    height: 40px;
-    width: 40px;
 }
 
-.pixel-board {
-    border-collapse: collapse;
-    border-spacing: 0px;
-    margin-top: 20px;
-    display: flex;
-    flex-wrap: wrap;
+#pixel-board {
+    display: table;
+    background-color: aqua;
+    margin: 10px auto;
+
+}
+
+.line-pixel-board {
+    display: table-row;
 }
 
 .pixel {
+    width: 40px;
+    height: 40px;
     border: 1px solid black;
-    background-color: white;
-    display: inline-flex;
-    height: 25px;
-    width: 25px;
-}
-
-.actionButton {
-    background-color: white;
-    border: 1px solid black;
-    margin: 0 5px 15px 0;
-    padding: 8px;
-}
-
-table {
-    vertical-align: middle;
-    border: 1px solid black;
-    background-color: white;
-    display: inline-flex;
-    height: 25px;
-    width: 25px;
-}
-
-.board-size {
-    height: 20px;
-    width: 100px;
+    display: table-cell;
 }
