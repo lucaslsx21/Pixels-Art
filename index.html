@@ -1,35 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project: Pixels Art</title>
     <link rel="stylesheet" href="style.css">
-    <title>Projeto Arte com Pixels</title>
-    
+
 </head>
 
 <body>
-    <div class="wrapper">
     <header>
-        <h1 id='title'>Paleta de Cores</h1>
+        <h1 id="title">Paleta de Cores</h1>
     </header>
     <main>
-        <div id="color-palette"></div>
+        <section id="canvas" class="canvas">
+            <ul id="color-palette" class="color-palette">
+                <li class="color"></li>
+                <li class="color"></li>
+                <li class="color"></li>
+                <li class="color"></li>
 
-        <button id="button-random-color">Cores aleatórias</button>
+                <section id="controls" class="controls">
+                    <button id="clear-board" class="actionButton">Limpar</button>
+                    <form method="dialog">
+                        <input type="number" id="board-size" class="board-size" min="1" max="100"
+                            placeholder="Tamanho do quadro">
+                        <button id="generate-board" class="actionButton">VQV</button>
+                    </form>
+                    <button id="button-random-color" class="actionButton">Cores aleatórias</button>
+                </section>
 
-        <div id="buttons">
-            <button id="clear-board">Limpar</button>
-
-            <input type="number" name="board-size" id="board-size" min="1" max="30">
-            <button id="generate-board">VQV</button>
-        </div>
-
-        <div id="pixel-board"></div>
+                <table id="pixel-board" class="pixel-board">
+                </table>
+        </section>
     </main>
-    </div>
-    <script src="./script.js"></script>
+    <script src="script.js"></script>
 </body>
 
 </html>
