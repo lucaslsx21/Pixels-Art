@@ -80,7 +80,6 @@ function paintPixel() {
     if (pixel.className === 'pixel') {
         pixel.style.backgroundColor = selectedColor.style.backgroundColor;
     }
-    keepPixels();
 }
 pixelBoard.addEventListener('click', paintPixel);
 
@@ -88,6 +87,5 @@ function clearPixelsBoard() {
     for (let i = 0; i < pixels.length; i += 1) {
         pixels[i].style.backgroundColor = 'white';
     }
-    keepPixels();
 }
 clearBoardBtn.addEventListener('click', clearPixelsBoard);

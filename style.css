@@ -8,8 +8,7 @@ h1 {
 
 main {
     justify-content: center;
-    display: flex;
-    text-align: center;
+    
 }
 
 section {
@@ -17,9 +16,8 @@ section {
 }
 
 #color-palette {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+    display: flex;
+    gap: 8px;
 }
 
 #black {
@@ -35,7 +33,7 @@ section {
 
 #pixel-board {
     display: grid;
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .pixel {
