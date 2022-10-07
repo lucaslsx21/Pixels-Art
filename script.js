@@ -10,7 +10,7 @@ function generateRandomColor() {
     const char = '0123456789ABCDEF';
     let color = '#';
 
-    for (let index = 0; index < 6; index += 1) {
+    for (let i = 0; i < 6; i += 1) {
         color += char[Math.floor(Math.random() * 16)];
     }
     return color;
@@ -18,16 +18,16 @@ function generateRandomColor() {
 
 function keepColors() {
     const array = [];
-    for (let index = 0; index < colors.length; index += 1) {
-        array[index] = colors[index].style.backgroundColor;
+    for (let i = 0; i < colors.length; i += 1) {
+        array[i] = colors[i].style.backgroundColor;
     }
     localStorage.setItem('colorPalette', JSON.stringify(array));
 }
 
 function createColorPalete() {
     colors[0].style.backgroundColor = 'black';
-    for (let index = 1; index < 4; index += 1) {
-        colors[index].style.backgroundColor = generateRandomColor();
+    for (let i = 1; i < 4; i += 1) {
+        colors[i].style.backgroundColor = generateRandomColor();
         keepColors();
     }
 }
@@ -36,9 +36,9 @@ button.addEventListener('click', createColorPalete);
 
 function takeStorageColors() {
     const keepedColors = JSON.parse(localStorage.getItem('colorPalette'));
-    for (let index = 0; index < 4; index += 1) {
-        const color = document.getElementsByClassName('color')[index];
-        color.style.backgroundColor = keepedColors[index];
+    for (let i = 0; i < 4; i += 1) {
+        const color = document.getElementsByClassName('color')[i];
+        color.style.backgroundColor = keepedColors[i];
     }
 }
 
@@ -54,7 +54,7 @@ function checkStorage() {
 checkStorage();
 
 function createPixelBoard(num) {
-    for (let index = 0; index < num * num; index += 1) {
+    for (let i = 0; i < num * num; i += 1) {
         const div = document.createElement('div');
         div.style.backgroundColor = 'white';
         div.className = 'pixel';
@@ -85,16 +85,9 @@ function paintPixel() {
 pixelBoard.addEventListener('click', paintPixel);
 
 function clearPixelsBoard() {
-    for (let index = 0; index < pixels.length; index += 1) {
-        pixels[index].style.backgroundColor = 'white';
+    for (let i = 0; i < pixels.length; i += 1) {
+        pixels[i].style.backgroundColor = 'white';
     }
     keepPixels();
 }
 clearBoardBtn.addEventListener('click', clearPixelsBoard);
-
-
-window.onload = () => {
-
-createColorPalete();
-
-}
