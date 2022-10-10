@@ -51,6 +51,7 @@ function checkStorage() {
         generateRandomColor();
         createColorPalete();
         keepColors();
+        getPixeCanvaslStorage();
     } else {
         takeStorageColors();
     }
@@ -98,3 +99,18 @@ function clearPixelsBoard() {
     }
 }
 clearBoardBtn.addEventListener('click', clearPixelsBoard);
+
+//Requisito 12 - salvar e recuperar
+function savePixelStorage() {
+    const getPixel = document.querySelector('#pixel-board');
+    localStorage.setItem('pixelBoard', getPixel.innerHTML);
+}
+pixelBoard.addEventListener('click', savePixelStorage);
+
+function getPixeCanvaslStorage() {
+    const setPixel = localStorage.getItem('pixelBoard');
+    if (setPixel !== null) {
+        pixelBoard.innerHTML = setPixel;
+    }
+}
+getPixeCanvaslStorage();
