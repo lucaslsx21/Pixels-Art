@@ -6,6 +6,9 @@ const colorPalette = document.getElementById('color-palette');
 const pixels = document.getElementsByClassName('pixel');
 const clearBoardBtn = document.getElementById('clear-board');
 const buttonVqv = document.querySelector('#generate-board');
+const inputSize = document.querySelector('#board-size');
+const pBoard = '#pixel-board';
+let input = 0;
 //gerando 
 function generateRandomColor() {
     const char = '0123456789ABCDEF';
@@ -114,3 +117,4 @@ function getPixeCanvaslStorage() {
     }
 }
 getPixeCanvaslStorage();
+
